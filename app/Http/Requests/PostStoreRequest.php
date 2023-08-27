@@ -38,4 +38,21 @@ class PostStoreRequest extends FormRequest
             ];
         }
     }
+
+
+    public function messages()
+    {
+        if(request()->isMethod('post')){
+            return[
+                'name.required'=>'Name is required',
+                'image.required'=>'Image is required',
+                'description.required'=>'Description is required!'
+            ];
+        }else{
+            return[
+            'name.required'=>'Name is required',
+            'description.required'=>'Description is required'
+            ];
+        }
+    }
 }

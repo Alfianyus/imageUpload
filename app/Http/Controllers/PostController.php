@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Http\Requests\PostStoreRequest;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -32,9 +35,22 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostStoreRequest $request)
     {
-        //
+        try{
+            $imageName=Str::random(32).".".$request->image->getClientOriginalExtension();
+            //post create
+            Post::create([
+                'name'=>$request->name,
+                'image'=>$imageName,
+                'description'=>$request->description
+            ]);
+
+        }catch(\Exception $e){
+            return response()->json([
+                'message'=>'Something went really wrong'
+            ],500);
+        }
     }
 
     /**
